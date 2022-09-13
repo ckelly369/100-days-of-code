@@ -5,3 +5,4 @@ print("\nWhat's the name of your first pet?\n")
 pet = input("Pet name: ")
 
 print("\nYour new band name could be " + city + " " + pet)
+print(city[1])
