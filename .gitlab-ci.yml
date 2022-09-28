@@ -1,0 +1,51 @@
+build-brand:
+  stage: Validate/Build
+  image: $REPOSITORY_URL/dockerhub-mirror/docker/library/docker:latest
+  services:
+    - name: $REPOSITORY_URL/dockerhub-mirror/docker/library/docker:dind
+      alias: docker
+  tags:
+    - $RUNNER_TAG
+  extends:
+    - .install-dependencies
+    - .dependencies_cache
+  parallel:
+    matrix:
+      - APPLICATION: brand1
+        ENVIRONMENT: development
+        ACCOUNT_TYPE: development
+        SERVICE_NAME: brand1
+        REPOSITORY_URL: $DEV_REPOSITORY_URL
+        RUNNER_TAG: reactweb-dev
+      - APPLICATION: brand1
+        ENVIRONMENT: preprod
+        ACCOUNT_TYPE: development
+        SERVICE_NAME: brand1
+        REPOSITORY_URL: $DEV_REPOSITORY_URL
+        RUNNER_TAG: reactweb-dev
+      - APPLICATION: brand1
+        ENVIRONMENT: qa
+        ACCOUNT_TYPE: development
+        SERVICE_NAME: brand1
+        REPOSITORY_URL: $DEV_REPOSITORY_URL
+        RUNNER_TAG: reactweb-dev
+      - APPLICATION: brand1
+        ENVIRONMENT: qa-staging
+        ACCOUNT_TYPE: development
+        SERVICE_NAME: brand1-staging
+        REPOSITORY_URL: $DEV_REPOSITORY_URL
+        RUNNER_TAG: reactweb-dev
+      - APPLICATION: brand1
+        ENVIRONMENT: preprod-staging
+        ACCOUNT_TYPE: development
+        SERVICE_NAME: brand1-staging
+        REPOSITORY_URL: $DEV_REPOSITORY_URL
+        RUNNER_TAG: reactweb-dev
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "brandci"'
+  script:
+    - *build-image-matrix
