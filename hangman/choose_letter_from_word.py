@@ -1,5 +1,4 @@
 import random
-from subprocess import check_output
 
 word_list = ["ardvark", "baboon", "camel"]
 
