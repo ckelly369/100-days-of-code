@@ -3,6 +3,7 @@ import random
 from turtle import pos
 import hangman_art
 from word_list import words
+import os
 
 # Three words in a list.
 # A random word is defined in a new variable.
@@ -26,6 +27,8 @@ lives = 6
 while not end_of_game:
     guess = input("Guess a letter: ").lower()
 
+    os.system('clear')
+
     # The range is between 0 and the word length (length of chosen word).
     # On the first run, the position of chosen_word is index 0.
     # So the letter variable becomes equal to the first letter of the chosen word.
@@ -40,6 +43,7 @@ while not end_of_game:
         if letter == guess:
             display[position] = letter
             print(hangman_art.stages[lives])
+    print(f"\n{' '.join(display)}\n")
 
     if guess not in chosen_word:
         lives -= 1
@@ -48,9 +52,6 @@ while not end_of_game:
         if lives == 0:
             end_of_game = True
             print("Game over.")
-    print("")
-    print(display)
-    print("")
 
     if "_" not in display:
         end_of_game = True
