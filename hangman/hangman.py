@@ -1,4 +1,6 @@
+from dis import dis
 import random
+from turtle import pos
 import hangman_art
 from word_list import words
 
@@ -18,8 +20,6 @@ word_length = len(chosen_word)
 for blank in chosen_word:
     display += "_"
 
-print(display)
-
 end_of_game = False
 lives = 6
 
@@ -32,21 +32,26 @@ while not end_of_game:
     # Statement to check if the letter matches the guess.
     # If False, go back to the for loop and move to next index position.
     # If True, look at the list (display) and replace the blank with the matching letter.
+    if guess in display:
+        print(f"You have already selected {guess}, try another letter.")
+    
     for position in range(word_length):
         letter = chosen_word[position]
         if letter == guess:
             display[position] = letter
+            print(hangman_art.stages[lives])
 
     if guess not in chosen_word:
         lives -= 1
-        print(f"You now have {lives} lives.")
+        print(f"The letter you selected is not in the word.\nYou now have {lives} lives remaining.")
+        print(hangman_art.stages[lives])
         if lives == 0:
             end_of_game = True
             print("Game over.")
-    print(display) 
+    print("")
+    print(display)
+    print("")
 
     if "_" not in display:
         end_of_game = True
         print("You have won!")
-
-print(hangman_art.stages[lives])
