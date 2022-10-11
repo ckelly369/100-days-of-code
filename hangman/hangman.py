@@ -9,8 +9,11 @@ import os
 # A random word is defined in a new variable.
 # Printed the chosen word.
 print(hangman_art.logo)
+end_of_game = False
+lives = 6
 word_list = words
 chosen_word = random.choice(word_list)
+
 print(f"The word that was chosen is {chosen_word}.")
 
 # Empty list.
@@ -20,9 +23,6 @@ word_length = len(chosen_word)
 
 for blank in chosen_word:
     display += "_"
-
-end_of_game = False
-lives = 6
 
 while not end_of_game:
     guess = input("Guess a letter: ").lower()
